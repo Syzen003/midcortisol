@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent It - Peer-to-Peer Rental Marketplace</title>
+    <!-- Google Fonts & FontAwesome for Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --bg-light: #F9FAFB;
+            --white: #FFFFFF;
+            --border: #E5E7EB;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        /* Header / Navbar */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 100%);
+            color: var(--white);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        /* Search Bar Box */
+        .search-box {
+            background: var(--white);
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            display: flex;
+            gap: 0.75rem;
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input-group {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0 0.5rem;
+            color: var(--text-light);
+        }
+
+        .search-input-group input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+
+        /* Main Content & Listings */
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img {
+            height: 200px;
+            background-color: #E5E7EB;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .card-content {
+            padding: 1.25rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .card-price span {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-light);
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--white);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.25rem; }
+            .search-box { flex-direction: column; background: transparent; box-shadow: none; }
+            .search-input-group { background: var(--white); padding: 1rem; border-radius: var(--radius); margin-bottom: 0.5rem; box-shadow: var(--shadow); }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="navbar">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-box-open"></i> Rent It
+            </a>
+            <ul class="nav-links">
+                <li><a href="#">Explore</a></li>
+                <li><a href="#">How it Works</a></li>
+                <li><a href="#">List an Item</a></li>
+                <li><a href="#" class="btn btn-outline">Sign In</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>Rent anything, anywhere.</h1>
+            <p>Discover unique items to rent from people in your local community, from camera gear to camping tools.</p>
+            
+            <div class="search-box">
+                <div class="search-input-group">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="What are you looking to rent?">
+                </div>
+                <div class="search-input-group">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <input type="text" placeholder="Location">
+                </div>
+                <button class="btn">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Marketplace Section -->
+    <main class="container">
+        <div class="section-title">
+            <h2>Featured Rentals</h2>
+            <a href="#" style="font-size: 1rem; color: var(--primary); text-decoration: none;">View All &rarr;</a>
+        </div>
+
+        <div class="grid">
+            <!-- Item 1 -->
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80')">
+                    <div class="card-badge">Electronics</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Sony Alpha Mirrorless Camera</h3>
+                    <div class="card-price">$45 <span>/ day</span></div>
+                    <div class="card-footer">
+                        <span><i class="fa-solid fa-star" style="color: #F59E0B;"></i> 4.9 (24)</span>
+                        <span>San Francisco, CA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=600&q=80')">
+                    <div class="card-badge">Outdoors</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Carbon Fiber Road Bike</h3>
+                    <div class="card-price">$30 <span>/ day</span></div>
+                    <div class="card-footer">
+                        <span><i class="fa-solid fa-star" style="color: #F59E0B;"></i> 4.8 (19)</span>
+                        <span>Boulder, CO</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1508873696983-2df5c920ac1c?auto=format&fit=crop&w=600&q=80')">
+                    <div class="card-badge">Tools</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">DeWalt Heavy Duty Power Drill</h3>
+                    <div class="card-price">$15 <span>/ day</span></div>
+                    <div class="card-footer">
+                        <span><i class="fa-solid fa-star" style="color: #F59E0B;"></i> 5.0 (31)</span>
+                        <span>Austin, TX</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1526738549149-8e07eca6c147?auto=format&fit=crop&w=600&q=80')">
+                    <div class="card-badge">Party & Events</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Portable Bluetooth DJ Speaker</h3>
+                    <div class="card-price">$40 <span>/ day</span></div>
+                    <div class="card-footer">
+                        <span><i class="fa-solid fa-star" style="color: #F59E0B;"></i> 4.7 (12)</span>
+                        <span>Miami, FL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Rent It Marketplace, Inc. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
